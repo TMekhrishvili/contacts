@@ -1,10 +1,28 @@
 import React from 'react'
 import './reset.css'
+import './index.css'
+import ContactList from './pages/contact-list/ContactList'
+import Search from './components/Search'
+import Footer from './components/Footer'
+import Header from './components/Header'
 
 const App = () => {
   return (
-    <div>
-      <h1>App</h1>
+    <div className="container">
+      <header className="header">
+        <Header />
+      </header>
+      <div className="main">
+        <section className="contact-list">
+          <ContactList />
+        </section>
+        <section className="search">
+          <Search />
+        </section>
+      </div>
+      <footer className="footer">
+        <Footer />
+      </footer>
     </div>
   )
 }
