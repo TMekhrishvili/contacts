@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Table } from 'antd'
-import { fetchContacts } from '../../services/services';
+import { fetchContacts } from '../../services/services'
+import { GlobalContext } from '../../context/GlobalStates'
 
 const columns = [
     {
@@ -37,34 +38,6 @@ const columns = [
     },
 ];
 
-
-// const data = [
-//     {
-//         key: '1',
-//         name: 'ანზორ',
-//         lastname: 'ახვლედიანი',
-//         dob: '12/05/2020',
-//         phonenumer: '599787878',
-//         city: 'თბილისი',
-//         address: 'მელიქიშვილის ქ. 25',
-//         otherinfo: 'სხვა',
-//         favorite: ''
-//     },
-//     {
-//         key: '2',
-//         name: 'ანზორ',
-//         lastname: 'ახვლედიანი',
-//         dob: '12/05/2020',
-//         phonenumer: '599787878',
-//         city: 'თბილისი',
-//         address: 'მელიქიშვილის ქ. 25',
-//         otherinfo: 'სხვა',
-//         favorite: ''
-//     },
-// ];
-
-
-
 const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
@@ -73,6 +46,7 @@ const rowSelection = {
 
 const ContactList = () => {
     const [data, setData] = useState([])
+    const { searchText } = useContext(GlobalContext)
     useEffect(() => {
         fetchContacts()
             .then(response => {

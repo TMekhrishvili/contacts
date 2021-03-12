@@ -24,6 +24,7 @@ const AddForm = ({ isModalVisible, handleOk }) => {
         "ზუგდიდი",
         "სხვა"
     ]
+
     return (
         <Modal
             title="Basic Modal"
@@ -37,7 +38,6 @@ const AddForm = ({ isModalVisible, handleOk }) => {
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
             >
-
                 <div>
                     <Form.Item
                         name="firstName"

@@ -2,9 +2,9 @@ import axios from "axios";
 
 const url = ``;
 
-export const fetchContacts = () => {
+export const fetchContacts = searchText => {
     return new Promise((resolve, reject) => {
-        axios.get(url)
+        axios.post(url)
             .then(response => {
                 resolve(response)
             })
