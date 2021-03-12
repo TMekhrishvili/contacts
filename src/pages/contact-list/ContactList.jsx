@@ -1,5 +1,6 @@
-import React from 'react'
-import { Table } from 'antd';
+import React, { useState, useEffect } from 'react'
+import { Table } from 'antd'
+import { fetchContacts } from '../../services/services';
 
 const columns = [
     {
@@ -30,38 +31,67 @@ const columns = [
         title: 'დამატებითი დეტალები',
         dataIndex: 'otherinfo',
     },
-];
-const data = [
     {
-        key: '1',
-        name: 'ანზორ',
-        lastname: 'ახვლედიანი',
-        dob: '12/05/2020',
-        phonenumer: '599787878',
-        city: 'თბილისი',
-        address: 'მელიქიშვილის ქ. 25',
-        otherinfo: 'სხვა',
-    },
-    {
-        key: '2',
-        name: 'ანზორ',
-        lastname: 'ახვლედიანი',
-        dob: '12/05/2020',
-        phonenumer: '599787878',
-        city: 'თბილისი',
-        address: 'მელიქიშვილის ქ. 25',
-        otherinfo: 'სხვა',
+        title: 'ფავორიტი',
+        dataIndex: 'favorite',
     },
 ];
 
+
+// const data = [
+//     {
+//         key: '1',
+//         name: 'ანზორ',
+//         lastname: 'ახვლედიანი',
+//         dob: '12/05/2020',
+//         phonenumer: '599787878',
+//         city: 'თბილისი',
+//         address: 'მელიქიშვილის ქ. 25',
+//         otherinfo: 'სხვა',
+//         favorite: ''
+//     },
+//     {
+//         key: '2',
+//         name: 'ანზორ',
+//         lastname: 'ახვლედიანი',
+//         dob: '12/05/2020',
+//         phonenumer: '599787878',
+//         city: 'თბილისი',
+//         address: 'მელიქიშვილის ქ. 25',
+//         otherinfo: 'სხვა',
+//         favorite: ''
+//     },
+// ];
+
+
+
+const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    }
+};
 
 const ContactList = () => {
+    const [data, setData] = useState([])
+    useEffect(() => {
+        fetchContacts()
+            .then(response => {
+                setData(response)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }, []);
     return (
         <Table
             columns={columns}
             dataSource={data}
             pagination={false}
             size="middle"
+            rowSelection={{
+                type: 'radio',
+                ...rowSelection,
+            }}
         />
     )
 }

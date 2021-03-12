@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
     return (
-        <p>Contacts Page &#169; <strong>Tamar Mekhrishvili</strong></p>
+        <p>Contacts Page &#169; <strong>G.D.</strong></p>
     )
 }
 

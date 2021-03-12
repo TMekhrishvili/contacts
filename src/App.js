@@ -5,25 +5,30 @@ import ContactList from './pages/contact-list/ContactList'
 import Search from './components/Search'
 import Footer from './components/Footer'
 import Header from './components/Header'
+import CrudButtons from './components/CrudButtons'
+import { GlobalProvider } from './context/GlobalStates';
 
 const App = () => {
   return (
-    <div className="container">
-      <header className="header">
-        <Header />
-      </header>
-      <div className="main">
-        <section className="contact-list">
-          <ContactList />
-        </section>
-        <section className="search">
-          <Search />
-        </section>
+    <GlobalProvider>
+      <div className="container">
+        <header className="header">
+          <Header />
+        </header>
+        <div className="main">
+          <section className="contact-list">
+            <CrudButtons />
+            <ContactList />
+          </section>
+          <section className="search">
+            <Search />
+          </section>
+        </div>
+        <footer className="footer">
+          <Footer />
+        </footer>
       </div>
-      <footer className="footer">
-        <Footer />
-      </footer>
-    </div>
+    </GlobalProvider>
   )
 }
 
