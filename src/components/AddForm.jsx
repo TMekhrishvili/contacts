@@ -3,7 +3,7 @@ import { Form, Modal, Input, DatePicker, Select, } from 'antd'
 import { GlobalContext } from '../context/GlobalStates'
 import { fetchContact, fetchCity, fetchGender } from '../services/services'
 
-const AddForm = ({ isModalVisible, handleOk }) => {
+const AddForm = ({ isVisible, handleOk, handleCancel }) => {
     const [cities, setCities] = useState([])
     const [gender, setGender] = useState([])
     const [contact, setContact] = useState({})
@@ -51,9 +51,9 @@ const AddForm = ({ isModalVisible, handleOk }) => {
     return (
         <Modal
             title="კონტაქტის დამატება/რედაქტირება"
-            visible={isModalVisible}
+            visible={isVisible}
             onOk={handleOk}
-            onCancel={handleOk}
+            onCancel={handleCancel}
         >
             <Form
                 name="basic"

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Table } from 'antd'
-import { fetchContacts } from '../../services/services'
-import { GlobalContext } from '../../context/GlobalStates'
+import { fetchContacts } from '../services/services'
+import { GlobalContext } from '../context/GlobalStates'
 
 const columns = [
     {
@@ -17,7 +17,7 @@ const columns = [
         dataIndex: 'cityName',
     },
     {
-        title: 'სექსი',
+        title: 'სქესი',
         dataIndex: 'genderName',
     },
     {
@@ -38,12 +38,10 @@ const columns = [
     },
 ];
 
-
-
 const ContactList = () => {
 
     const [data, setData] = useState([])
-    const { searchText, setContactID } = useContext(GlobalContext)
+    const { searchText, setContactID, contactID } = useContext(GlobalContext)
 
     useEffect(() => {
         fetchContacts(searchText)
@@ -54,14 +52,7 @@ const ContactList = () => {
             .catch(error => {
                 console.log(error)
             })
-    }, [searchText]);
-
-    const rowSelection = {
-        onChange: (selectedRowKeys, selectedRows) => {
-            setContactID(selectedRowKeys)
-            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-        }
-    };
+    }, [searchText, contactID]);
 
     return (
         <Table
@@ -71,7 +62,10 @@ const ContactList = () => {
             size="middle"
             rowSelection={{
                 type: 'radio',
-                ...rowSelection,
+                onChange: (selectedRowKeys) => {
+                    console.log(selectedRowKeys)
+                    setContactID(selectedRowKeys)
+                }
             }}
         />
     )

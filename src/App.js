@@ -1,7 +1,7 @@
 import React from 'react'
 import './reset.css'
 import './index.css'
-import ContactList from './pages/contact-list/ContactList'
+import ContactList from './pages/ContactList'
 import Search from './components/Search'
 import Footer from './components/Footer'
 import Header from './components/Header'
