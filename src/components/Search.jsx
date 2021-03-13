@@ -1,8 +1,21 @@
-import React, { useState } from 'react'
-import { Form, Radio, Input, Button, DatePicker, Select, } from 'antd';
+import React, { useState, useEffect, useContext } from 'react'
+import { Form, Radio, Input, Button, DatePicker, Select, } from 'antd'
+import { fetchCity } from '../services/services'
+import { GlobalContext } from '../context/GlobalStates'
 
 const Search = () => {
     const [radio, setRadio] = useState(0)
+    const [cities, setCities] = useState([])
+    const { setSearchText } = useContext(GlobalContext)
+    useEffect(() => {
+        fetchCity()
+            .then(response => {
+                setCities(response)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }, [])
 
     const radioStyle = {
         fontFamily: 'sylfaen',
@@ -13,23 +26,13 @@ const Search = () => {
         width: '100%',
     }
 
-    const cities = [
-        "თბილისი",
-        "ქუთაისი",
-        "ბორჯომი",
-        "რუსთავი",
-        "ფოთი",
-        "ბათუმი",
-        "თელავი",
-        "ზუგდიდი",
-        "სხვა"
-    ]
-
     const onChange = e => {
         setRadio(e.target.value)
     }
     const onFinish = (values) => {
-        console.log('Success:', values);
+        if (radio === 0) {
+            setSearchText(values.name)
+        }
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -67,13 +70,15 @@ const Search = () => {
                             >
                                 <DatePicker style={datePicker} placeholder="დაბადების თარიღი" />
                             </Form.Item>
+
                             <Form.Item
                                 name="city"
                             >
                                 <Select placeholder="ქალაქი">
-                                    {cities.map((value, index) => <Select.Option key={index} value={index}>{value}</Select.Option>)}
+                                    {cities.map((value, index) => <Select.Option key={index} value={index}>{value.cityName}</Select.Option>)}
                                 </Select>
                             </Form.Item>
+
                             <Form.Item
                                 name="phonenumber"
                             >
@@ -88,11 +93,24 @@ const Search = () => {
                             </Form.Item>
                         </div>
                     }
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit">
-                            ძიება
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                        <Form.Item>
+                            <Button
+                                type="primary"
+                                htmlType="submit"
+                                style={{ marginRight: '10px' }}
+                            >
+                                ძიება
                         </Button>
-                    </Form.Item>
+                        </Form.Item>
+                        <Form.Item>
+                            <Button
+                                onClick={() => { setSearchText('') }}
+                            >
+                                გასუფთავება
+                        </Button>
+                        </Form.Item>
+                    </div>
                 </Form>
             </div>
         </div>

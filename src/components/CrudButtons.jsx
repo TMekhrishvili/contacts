@@ -1,15 +1,32 @@
-import React, { useContext } from 'react'
-import { Button } from 'antd'
+import React, { useContext, useState } from 'react'
+import { Button, Modal } from 'antd'
 import { GlobalContext } from '../context/GlobalStates'
 import AddForm from './AddForm'
 import DeleteContact from './DeleteContact'
 import { deleteContact } from '../services/services'
 
 const CrudButtons = () => {
-    const { isModalVisible, setIsModalVisible, isDeleteModalVisible, setIsDeleteModalVisible, contactID, setContactID } = useContext(GlobalContext)
+    const {
+        isModalVisible,
+        setIsModalVisible,
+        isDeleteModalVisible,
+        setIsDeleteModalVisible,
+        contactID,
+        setContactID
+    } = useContext(GlobalContext)
 
-    const showModal = () => {
+    const [modalOpen, setModalOpen] = useState(false)
+
+    const add = () => {        
         setIsModalVisible(true)
+    }
+
+    const edit = () => {
+        if (contactID === 0) {
+            setModalOpen(true)
+        } else {
+            setIsModalVisible(true)
+        }
     }
     const handleOk = () => {
         setIsModalVisible(false)
@@ -20,7 +37,11 @@ const CrudButtons = () => {
 
 
     const showDeleteContactModal = () => {
-        setIsDeleteModalVisible(true)
+        if (contactID === 0) {
+            setModalOpen(true)
+        } else {
+            setIsDeleteModalVisible(true)
+        }
     }
     const handleDeleteContactOk = () => {
         setIsDeleteModalVisible(false)
@@ -39,18 +60,38 @@ const CrudButtons = () => {
 
     return (
         <div className="crud-buttons">
+
+            <Modal
+                title="ყურადღება"
+                visible={modalOpen}
+                onCancel={() => setModalOpen(false)}
+                footer={[
+                    <Button
+                        key="submit"
+                        type="primary"
+                        onClick={() => setModalOpen(false)}
+                    >
+                        კარგი
+                    </Button>
+                ]}
+            >
+                <p>გთხოვთ, მონიშნოთ ჩანაწერი.</p>
+            </Modal>
+
             <AddForm
                 isVisible={isModalVisible}
                 handleOk={handleOk}
                 handleCancel={handleCancel}
             />
+
             <DeleteContact
                 isVisible={isDeleteModalVisible}
                 handleOk={handleDeleteContactOk}
                 handleCancel={handleDeleteContactCancel}
             />
-            <Button type="primary" onClick={showModal}>დამატება</Button>
-            <Button onClick={showModal}>რედაქტირება</Button>
+
+            <Button type="primary" onClick={add}>დამატება</Button>
+            <Button onClick={edit}>რედაქტირება</Button>
             <Button onClick={showDeleteContactModal} danger>წაშლა</Button>
         </div>
     )
