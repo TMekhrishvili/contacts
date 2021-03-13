@@ -6,7 +6,7 @@ import { GlobalContext } from '../context/GlobalStates'
 const Search = () => {
     const [radio, setRadio] = useState(0)
     const [cities, setCities] = useState([])
-    const { setSearchText } = useContext(GlobalContext)
+    const { setSearchText, setFilterType } = useContext(GlobalContext)
     useEffect(() => {
         fetchCity()
             .then(response => {
@@ -105,7 +105,10 @@ const Search = () => {
                         </Form.Item>
                         <Form.Item>
                             <Button
-                                onClick={() => { setSearchText('') }}
+                                onClick={() => {
+                                    setSearchText('')
+                                    setFilterType(0)
+                                }}
                             >
                                 გასუფთავება
                         </Button>
