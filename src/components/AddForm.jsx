@@ -1,7 +1,42 @@
-import React from 'react'
-import { Form, Modal, Input, DatePicker, Select, } from 'antd';
+import React, { useState, useContext, useEffect } from 'react'
+import { Form, Modal, Input, DatePicker, Select, } from 'antd'
+import { GlobalContext } from '../context/GlobalStates'
+import { fetchContact, fetchCity, fetchGender } from '../services/services'
 
 const AddForm = ({ isModalVisible, handleOk }) => {
+    const [cities, setCities] = useState([])
+    const [gender, setGender] = useState([])
+    const [contact, setContact] = useState({})
+    const { contactID } = useContext(GlobalContext)
+
+    useEffect(() => {
+        fetchCity()
+            .then(response => {
+                setCities(response)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
+        fetchGender()
+            .then(response => {
+                setGender(response)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
+        if (contactID > 0) {
+            fetchContact(contactID)
+                .then(response => {
+                    setContact(response)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        }
+    }, [contactID]);
+
     const onFinish = (values) => {
         console.log('Success:', values);
     };
@@ -13,21 +48,9 @@ const AddForm = ({ isModalVisible, handleOk }) => {
         width: '100%',
     }
 
-    const cities = [
-        "თბილისი",
-        "ქუთაისი",
-        "ბორჯომი",
-        "რუსთავი",
-        "ფოთი",
-        "ბათუმი",
-        "თელავი",
-        "ზუგდიდი",
-        "სხვა"
-    ]
-
     return (
         <Modal
-            title="Basic Modal"
+            title="კონტაქტის დამატება/რედაქტირება"
             visible={isModalVisible}
             onOk={handleOk}
             onCancel={handleOk}
@@ -42,12 +65,27 @@ const AddForm = ({ isModalVisible, handleOk }) => {
                     <Form.Item
                         name="firstName"
                     >
-                        <Input placeholder="სახელი" />
+                        <Input
+                            placeholder="სახელი"
+                            defaultValue={!!contact.firstname ? contact.firstname : ''}
+                        />
                     </Form.Item>
                     <Form.Item
                         name="lastName"
                     >
-                        <Input placeholder="გვარი" />
+                        <Input
+                            placeholder="გვარი"
+                            defaultValue={!!contact.lastname ? contact.lastname : ''}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        name="gender"
+                    >
+                        <Select
+                            placeholder="სქესი"
+                        >
+                            {gender.map((value, index) => <Select.Option key={index} value={value.genderID}>{value.genderName}</Select.Option>)}
+                        </Select>
                     </Form.Item>
                     <Form.Item
                         name="dob"
@@ -58,7 +96,7 @@ const AddForm = ({ isModalVisible, handleOk }) => {
                         name="city"
                     >
                         <Select placeholder="ქალაქი">
-                            {cities.map((value, index) => <Select.Option key={index} value={index}>{value}</Select.Option>)}
+                            {cities.map((value, index) => <Select.Option key={index} value={index}>{value.cityName}</Select.Option>)}
                         </Select>
                     </Form.Item>
                     <Form.Item

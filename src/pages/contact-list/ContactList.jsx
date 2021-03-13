@@ -1,61 +1,68 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Table } from 'antd'
 import { fetchContacts } from '../../services/services'
 import { GlobalContext } from '../../context/GlobalStates'
 
 const columns = [
     {
-        title: 'სახელი',
-        dataIndex: 'name',
+        title: 'სახელი და გვარი',
+        dataIndex: 'fullname',
     },
     {
-        title: 'გვარი',
-        dataIndex: 'lastname',
-    },
-    {
-        title: 'დაბადების თარიღი',
-        dataIndex: 'dob',
-    },
-    {
-        title: 'ტელეფონის ნომერი',
-        dataIndex: 'phonenumer',
+        title: 'მობილურის ნომერი',
+        dataIndex: 'phoneNumber',
     },
     {
         title: 'ქალაქი',
-        dataIndex: 'city',
+        dataIndex: 'cityName',
+    },
+    {
+        title: 'სექსი',
+        dataIndex: 'genderName',
     },
     {
         title: 'მისამართი',
         dataIndex: 'address',
     },
     {
+        title: 'დაბადების თარიღი',
+        dataIndex: 'dob',
+    },
+    {
         title: 'დამატებითი დეტალები',
-        dataIndex: 'otherinfo',
+        dataIndex: 'additionalDetails',
     },
     {
         title: 'ფავორიტი',
-        dataIndex: 'favorite',
+        dataIndex: 'isFavorite',
     },
 ];
 
-const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    }
-};
+
 
 const ContactList = () => {
+
     const [data, setData] = useState([])
-    const { searchText } = useContext(GlobalContext)
+    const { searchText, setContactID } = useContext(GlobalContext)
+
     useEffect(() => {
-        fetchContacts()
+        fetchContacts(searchText)
             .then(response => {
-                setData(response)
+                const res = response.map(value => ({ ...value, key: value.contactID }))
+                setData(res)
             })
             .catch(error => {
                 console.log(error)
             })
-    }, []);
+    }, [searchText]);
+
+    const rowSelection = {
+        onChange: (selectedRowKeys, selectedRows) => {
+            setContactID(selectedRowKeys)
+            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+        }
+    };
+
     return (
         <Table
             columns={columns}
