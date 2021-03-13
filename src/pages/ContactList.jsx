@@ -44,30 +44,28 @@ const ContactList = () => {
     const [data, setData] = useState([])
     const { searchText, setContactID, contactID } = useContext(GlobalContext)
 
+    const handleFavorite = value => {
+        fetchFavorite(value)
+            .then(response => {
+                console.log(response)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+    
     useEffect(() => {
         fetchContacts(searchText)
             .then(response => {
                 const res = response.map(value => ({ ...value, key: value.contactID, isFavorite: value.isFavorite ? <StarFilled style={{ color: 'green', fontSize: '24px', cursor: 'pointer' }} onClick={() => handleFavorite(value.contactID)} /> : <StarFilled onClick={() => handleFavorite(value.contactID)} style={{ color: 'gray', fontSize: '24px', cursor: 'pointer' }} /> }))
-                console.log(res)
                 setData(res)
             })
             .catch(error => {
                 console.log(error)
             })
-    }, [searchText, contactID]);
+    }, [searchText, contactID, handleFavorite]);
 
-    const handleFavorite = value => {
-        setContactID(0)
-        fetchFavorite(value)
-            .then(() => {
-                console.log("მოვიდა")
-                setContactID(value)
-            })
-            .catch(error => {
-                console.log(error)
-            })
-        setContactID(0)
-    }
+
     return (
         <Table
             columns={columns}
