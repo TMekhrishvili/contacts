@@ -78,6 +78,19 @@ export const deleteContact = contactID => {
     });
 };
 
+export const fetchFavorite = contactID => {
+    const url = `api/contacts/addFavorite/${contactID}`
+    return new Promise((resolve, reject) => {
+        axios.put(url)
+            .then(response => {
+                resolve(response)
+            })
+            .catch(error => {
+                reject(error)
+            })
+    });
+};
+
 export const postContact = data => {
     const url = `api/contacts`
     return new Promise((resolve, reject) => {

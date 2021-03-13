@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Table } from 'antd'
-import { fetchContacts } from '../services/services'
+import { fetchContacts, fetchFavorite } from '../services/services'
 import { GlobalContext } from '../context/GlobalStates'
+import { StarFilled } from '@ant-design/icons'
 
 const columns = [
     {
@@ -46,7 +47,8 @@ const ContactList = () => {
     useEffect(() => {
         fetchContacts(searchText)
             .then(response => {
-                const res = response.map(value => ({ ...value, key: value.contactID }))
+                const res = response.map(value => ({ ...value, key: value.contactID, isFavorite: value.isFavorite ? <StarFilled style={{ color: 'green', fontSize: '24px', cursor: 'pointer' }} onClick={() => handleFavorite(value.contactID)} /> : <StarFilled onClick={() => handleFavorite(value.contactID)} style={{ color: 'gray', fontSize: '24px', cursor: 'pointer' }} /> }))
+                console.log(res)
                 setData(res)
             })
             .catch(error => {
@@ -54,6 +56,18 @@ const ContactList = () => {
             })
     }, [searchText, contactID]);
 
+    const handleFavorite = value => {
+        setContactID(0)
+        fetchFavorite(value)
+            .then(() => {
+                console.log("მოვიდა")
+                setContactID(value)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        setContactID(0)
+    }
     return (
         <Table
             columns={columns}

@@ -17,7 +17,7 @@ const CrudButtons = () => {
 
     const [modalOpen, setModalOpen] = useState(false)
 
-    const add = () => {        
+    const add = () => {
         setIsModalVisible(true)
     }
 
@@ -59,8 +59,7 @@ const CrudButtons = () => {
     }
 
     return (
-        <div className="crud-buttons">
-
+        <div className="crud-buttons">            
             <Modal
                 title="ყურადღება"
                 visible={modalOpen}
