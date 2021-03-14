@@ -40,7 +40,6 @@ const columns = [
 ];
 
 const ContactList = () => {
-
     const [data, setData] = useState([])
     const { searchText, setContactID, contactID, filterType } = useContext(GlobalContext)
 
@@ -53,7 +52,6 @@ const ContactList = () => {
                 console.log(error)
             })
     }
-
     useEffect(() => {
         if (filterType === 0) {
             fetchContacts(searchText)
