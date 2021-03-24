@@ -6,7 +6,7 @@ app.use(cors())
 app.use(express.json())
 
 app.get('/', (req, res) => {
-    res.send({ id: 1 })
+    res.send({ hello: "world" })
 })
 
 const PORT = process.env.PORT || 3001
