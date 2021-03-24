@@ -7,7 +7,6 @@ const AddForm = ({ isVisible, handleOk, handleCancel }) => {
     const [cities, setCities] = useState([])
     const [gender, setGender] = useState([])
     const [phoneNumberType, setPhoneNumberType] = useState([])
-    const [contact, setContact] = useState({})
     const [otherCity, setOtherCity] = useState(false)
     const { contactID } = useContext(GlobalContext)
     const [date, setDate] = useState(null)
@@ -39,7 +38,7 @@ const AddForm = ({ isVisible, handleOk, handleCancel }) => {
         if (contactID > 0) {
             fetchContact(contactID)
                 .then(response => {
-                    setContact(response)
+                    console.log(response)
                 })
                 .catch(error => {
                     console.log(error)
