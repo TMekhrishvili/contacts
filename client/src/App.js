@@ -1,5 +1,4 @@
 import React from 'react'
-import './reset.css'
 import './index.css'
 import ContactList from './pages/ContactList'
 import Search from './components/Search'

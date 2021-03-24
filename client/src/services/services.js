@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "axios"
 
 export const fetchContacts = searchText => {
     const url = `api/contacts?searchText=${searchText}`
