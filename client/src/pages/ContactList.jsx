@@ -1,11 +1,3 @@
-import React from 'react'
-
-const ContactList = () => <p>Hello</p>
-
-export default ContactList
-
-
-
 import React, { useState, useEffect, useContext } from 'react'
 import { Table } from 'antd'
 import { fetchContacts, fetchDeleted, fetchFavorites, fetchFavorite } from '../services/services'
