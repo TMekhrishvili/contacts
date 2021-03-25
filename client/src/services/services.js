@@ -1,5 +1,19 @@
 import axios from "axios"
 
+export const addContact = data => {
+    const url = `add`
+    return new Promise((resolve, reject) => {
+        axios.post(url, data)
+            .then(response => {
+                resolve(response)
+            })
+            .catch(error => {
+                reject(error)
+            })
+    })
+}
+
+
 export const fetchContacts = searchText => {
     const url = `api/contacts?searchText=${searchText}`
     return new Promise((resolve, reject) => {
@@ -28,19 +42,6 @@ export const fetchContact = contactID => {
 
 export const fetchGender = () => {
     const url = `api/contacts/gender`
-    return new Promise((resolve, reject) => {
-        axios.get(url)
-            .then(response => {
-                resolve(response.data)
-            })
-            .catch(error => {
-                reject(error)
-            })
-    });
-};
-
-export const fetchPhoneNumberType = () => {
-    const url = `api/contacts/phoneNumberTypes`
     return new Promise((resolve, reject) => {
         axios.get(url)
             .then(response => {
@@ -91,15 +92,3 @@ export const fetchFavorite = contactID => {
     });
 };
 
-export const postContact = data => {
-    const url = `api/contacts`
-    return new Promise((resolve, reject) => {
-        axios.post(url, data)
-            .then(response => {
-                resolve(response)
-            })
-            .catch(error => {
-                reject(error)
-            })
-    });
-};

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const ContactsSchema = new mongoose.Schema({
-    fullNama: {
+    fullName: {
         type: String,
         required: true
     },

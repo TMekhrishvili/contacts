@@ -73,3 +73,7 @@ h1 {
     justify-content: flex-end;
     margin: 20px;
 }
+
+.general-modal {
+    padding: 30px 15px;
+}

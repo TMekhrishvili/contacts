@@ -1,96 +1,70 @@
-import React, { useContext, useState } from 'react'
-import { Button, Modal } from 'antd'
+import React, { useState, useContext } from 'react'
+import CreateUpdate from './CreateUpdate'
+//import Read from './Read'
 import { GlobalContext } from '../context/GlobalStates'
-import AddForm from './AddForm'
 import DeleteContact from './DeleteContact'
-import { deleteContact } from '../services/services'
+import Notification from './Notification'
+import { Button } from 'antd'
+import GeneralModal from './GeneralModal'
 
 const CrudButtons = () => {
-    const {
-        isModalVisible,
-        setIsModalVisible,
-        isDeleteModalVisible,
-        setIsDeleteModalVisible,
-        contactID,
-        setContactID
-    } = useContext(GlobalContext)
+    const [type, settype] = useState('CREATE')
+    const { contactID, setContactID, setIsModalVisible } = useContext(GlobalContext)
 
-    const [modalOpen, setModalOpen] = useState(false)
-
-    const add = () => {
-        setIsModalVisible(true)
-    }
-
-    const edit = () => {
-        if (contactID === 0) {
-            setModalOpen(true)
-        } else {
-            setIsModalVisible(true)
-        }
-    }
-    const handleOk = () => {
-        setIsModalVisible(false)
-    }
-    const handleCancel = () => {
-        setIsModalVisible(false)
-    }
-
-
-    const showDeleteContactModal = () => {
-        if (contactID === 0) {
-            setModalOpen(true)
-        } else {
-            setIsDeleteModalVisible(true)
-        }
-    }
-    const handleDeleteContactOk = () => {
-        setIsDeleteModalVisible(false)
-        deleteContact(contactID)
-            .then(response => {
-                console.log(response)
-                setContactID(0)
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }
-    const handleDeleteContactCancel = () => {
-        setIsDeleteModalVisible(false)
+    const childForModal = type => {
+        if (type === 'CREATE' || type === 'UPDATE') return <CreateUpdate />
+        //else if (type === 'READ') return <Read />
+        else if (type === 'DELETE') return <DeleteContact />
+        else if (type === 'NOTIFICATION') return <Notification />
     }
 
     return (
-        <div className="crud-buttons">
-            <Modal
-                title="ყურადღება"
-                visible={modalOpen}
-                onCancel={() => setModalOpen(false)}
-                footer={[
-                    <Button
-                        key="submit"
-                        type="primary"
-                        onClick={() => setModalOpen(false)}
-                    >
-                        კარგი
-                    </Button>
-                ]}
+        <div className="main">
+            <GeneralModal>
+                {childForModal(type)}
+            </GeneralModal>
+
+            <Button
+                type="primary"
+                onClick={() => {
+                    setIsModalVisible(true)
+                    setContactID(0)
+                    settype('CREATE')
+                }}
             >
-                <p>გთხოვთ, მონიშნოთ ჩანაწერი.</p>
-            </Modal>
+                Create
+            </Button>
 
-            <AddForm
-                isVisible={isModalVisible}
-                handleOk={handleOk}
-                handleCancel={handleCancel}
-            />
+            <Button
+                onClick={() => {
+                    setIsModalVisible(true)
+                    if (contactID > 0) settype('READ')
+                    else settype('NOTIFICATION')
+                }}
+            >
+                Read
+            </Button>
 
-            <DeleteContact
-                isVisible={isDeleteModalVisible}
-                handleOk={handleDeleteContactOk}
-                handleCancel={handleDeleteContactCancel}
-            />
-            <Button type="primary" onClick={add}>დამატება</Button>
-            <Button onClick={edit}>რედაქტირება</Button>
-            <Button onClick={showDeleteContactModal} danger>წაშლა</Button>
+            <Button
+                onClick={() => {
+                    setIsModalVisible(true)
+                    if (contactID > 0) settype('UPDATE')
+                    else settype('NOTIFICATION')
+                }}
+            >
+                Update
+            </Button>
+
+            <Button
+                onClick={() => {
+                    setIsModalVisible(true)
+                    if (contactID > 0) settype('DELETE')
+                    else settype('NOTIFICATION')
+                }}
+                danger
+            >
+                Delete
+            </Button>
         </div>
     )
 }
