@@ -77,3 +77,9 @@ h1 {
 .general-modal {
     padding: 30px 15px;
 }
+
+.main {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 0;
+}

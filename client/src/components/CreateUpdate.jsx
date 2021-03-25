@@ -103,7 +103,7 @@ const CreateUpdate = () => {
                         placeholder="Gender"
                         allowClear
                     >
-                        {gender.map((value, index) => <Select.Option key={index} value={value.id}>{value.genderName}</Select.Option>)}
+                        {gender.map((value, index) => <Select.Option key={index} value={value.id}>{value.gender}</Select.Option>)}
                     </Select>
                 </Form.Item>
 
@@ -111,7 +111,7 @@ const CreateUpdate = () => {
                     name="city"
                 >
                     <Select placeholder="City" allowClear>
-                        {cities.map((value, index) => <Select.Option key={index} value={value.id}>{value.cityName}</Select.Option>)}
+                        {cities.map((value, index) => <Select.Option key={index} value={value.id}>{value.city}</Select.Option>)}
                     </Select>
                 </Form.Item>
 

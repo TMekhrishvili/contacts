@@ -3,39 +3,47 @@ import { Table } from 'antd'
 import { fetchContacts, fetchFavorite } from '../services/services'
 import { GlobalContext } from '../context/GlobalStates'
 import { StarFilled } from '@ant-design/icons'
+import moment from 'moment'
 
 const columns = [
     {
-        title: 'სახელი და გვარი',
-        dataIndex: 'fullname',
+        title: 'FullName',
+        dataIndex: 'fullName',
     },
     {
-        title: 'მობილურის ნომერი',
-        dataIndex: 'phoneNumber',
+        title: 'Date of Bithday',
+        dataIndex: 'dob',
+        render(dob) {
+            return dob ? moment(dob).format("DD.MM.YYYY") : " - ";
+        },
     },
     {
-        title: 'ქალაქი',
-        dataIndex: 'cityName',
+        title: 'Gender',
+        dataIndex: 'gender',
     },
     {
-        title: 'სქესი',
-        dataIndex: 'genderName',
+        title: 'City',
+        dataIndex: 'city',
     },
     {
-        title: 'მისამართი',
+        title: 'Address',
         dataIndex: 'address',
     },
     {
-        title: 'დაბადების თარიღი',
-        dataIndex: 'dob',
+        title: 'Mobile',
+        dataIndex: 'mobileNumber',
     },
     {
-        title: 'დამატებითი დეტალები',
-        dataIndex: 'additionalDetails',
+        title: 'Comment',
+        dataIndex: 'comment',
     },
     {
-        title: 'ფავორიტი',
-        dataIndex: 'isFavorite',
+        title: 'Status',
+        dataIndex: 'status',
+    },
+    {
+        title: 'Favorite',
+        dataIndex: 'favorite',
     },
 ];
 
@@ -44,31 +52,30 @@ const ContactList = () => {
     const { searchText, setContactID, contactID } = useContext(GlobalContext)
 
     const handleFavorite = value => {
-        fetchFavorite(value)
-            .then(response => {
-                console.log(response)
-            })
-            .catch(error => {
-                console.log(error)
-            })
+        // fetchFavorite(value)
+        //     .then(response => {
+        //         console.log(response)
+        //     })
+        //     .catch(error => {
+        //         console.log(error)
+        //     })
     }
     useEffect(() => {
-        fetchContacts(searchText)
+        fetchContacts()
             .then(response => {
-                const res = response.map(value => ({ ...value, key: value.contactID, isFavorite: value.isFavorite ? <StarFilled style={{ color: 'green', fontSize: '24px', cursor: 'pointer' }} onClick={() => handleFavorite(value.contactID)} /> : <StarFilled onClick={() => handleFavorite(value.contactID)} style={{ color: 'gray', fontSize: '24px', cursor: 'pointer' }} /> }))
+                const res = response.map(value => ({ ...value, key: value._id, favorite: value.favorite ? <StarFilled style={{ color: 'green', fontSize: '24px', cursor: 'pointer' }} onClick={() => handleFavorite(value._id)} /> : <StarFilled onClick={() => handleFavorite(value._id)} style={{ color: 'gray', fontSize: '24px', cursor: 'pointer' }} /> }))
                 setData(res)
             })
             .catch(error => {
                 console.log(error)
             })
-    }, [searchText, contactID]);
+    }, [contactID]);
 
     return (
         <Table
             columns={columns}
             dataSource={data}
-            pagination={false}
-            size="middle"
+            size="small"
             rowSelection={{
                 type: 'radio',
                 onChange: (selectedRowKeys) => {

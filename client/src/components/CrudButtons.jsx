@@ -6,6 +6,7 @@ import DeleteContact from './DeleteContact'
 import Notification from './Notification'
 import { Button } from 'antd'
 import GeneralModal from './GeneralModal'
+import Read from './Read'
 
 const CrudButtons = () => {
     const [type, settype] = useState('CREATE')
@@ -13,7 +14,7 @@ const CrudButtons = () => {
 
     const childForModal = type => {
         if (type === 'CREATE' || type === 'UPDATE') return <CreateUpdate />
-        //else if (type === 'READ') return <Read />
+        else if (type === 'READ') return <Read />
         else if (type === 'DELETE') return <DeleteContact />
         else if (type === 'NOTIFICATION') return <Notification />
     }
