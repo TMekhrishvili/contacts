@@ -8,9 +8,7 @@ app.use(express.json())
 
 dotenv.config({ path: './config.env' })
 
-app.get('/', (req, res) => {
-    res.send({ hello: "world" })
-})
+app.use('/', require('./server/routes'))
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
