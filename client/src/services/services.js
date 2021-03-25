@@ -13,32 +13,6 @@ export const fetchContacts = searchText => {
     });
 };
 
-export const fetchDeleted = () => {
-    const url = `api/contacts/deletedContacts`
-    return new Promise((resolve, reject) => {
-        axios.get(url)
-            .then(response => {
-                resolve(response.data)
-            })
-            .catch(error => {
-                reject(error)
-            })
-    });
-};
-
-export const fetchFavorites = () => {
-    const url = `api/contacts/favoritedContacts`
-    return new Promise((resolve, reject) => {
-        axios.get(url)
-            .then(response => {
-                resolve(response.data)
-            })
-            .catch(error => {
-                reject(error)
-            })
-    });
-};
-
 export const fetchContact = contactID => {
     const url = `api/contacts/${contactID}`
     return new Promise((resolve, reject) => {

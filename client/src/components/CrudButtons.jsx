@@ -12,8 +12,7 @@ const CrudButtons = () => {
         isDeleteModalVisible,
         setIsDeleteModalVisible,
         contactID,
-        setContactID,
-        filterType
+        setContactID
     } = useContext(GlobalContext)
 
     const [modalOpen, setModalOpen] = useState(false)
@@ -89,11 +88,9 @@ const CrudButtons = () => {
                 handleOk={handleDeleteContactOk}
                 handleCancel={handleDeleteContactCancel}
             />
-            {filterType === 0 && <>
-                <Button type="primary" onClick={add}>დამატება</Button>
-                <Button onClick={edit}>რედაქტირება</Button>
-                <Button onClick={showDeleteContactModal} danger>წაშლა</Button>
-            </>}
+            <Button type="primary" onClick={add}>დამატება</Button>
+            <Button onClick={edit}>რედაქტირება</Button>
+            <Button onClick={showDeleteContactModal} danger>წაშლა</Button>
         </div>
     )
 }

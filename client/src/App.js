@@ -5,7 +5,6 @@ import Search from './components/Search'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import CrudButtons from './components/CrudButtons'
-import Filters from './components/Filters'
 import { GlobalProvider } from './context/GlobalStates'
 
 const App = () => {
@@ -17,7 +16,6 @@ const App = () => {
         </header>
         <div className="main">
           <section className="contact-list">
-            <Filters />
             <CrudButtons />
             <ContactList />
           </section>

@@ -7,7 +7,6 @@ export const GlobalProvider = (props) => {
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
     const [searchText, setSearchText] = useState('')
     const [contactID, setContactID] = useState(0)
-    const [filterType, setFilterType] = useState(0)
     return (
         <GlobalContext.Provider
             value={{
@@ -18,9 +17,7 @@ export const GlobalProvider = (props) => {
                 searchText,
                 setSearchText,
                 contactID,
-                setContactID,
-                filterType,
-                setFilterType
+                setContactID
             }}>
             { props.children}
         </GlobalContext.Provider>
